@@ -1,0 +1,52 @@
+# -*- coding: utf-8 -*-
+# @Time    : 2020/10/25 18:45
+# @Author  : xiaojing.guo
+# @Description:使用cookies进行登录
+import shelve
+from time import sleep
+
+import pytest
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+
+
+class TestBrowserMultiplexe():
+    def setup_method(self,method):
+        #打印cookies需要通过复用浏览器获取cookies
+         self.driver = webdriver.Chrome()
+         self.driver.implicitly_wait(5)
+
+    @pytest.mark.skip()
+    def test_cookie(self):
+        #通过浏览器复用打印出cookis
+        self.driver.get("https://work.weixin.qq.com/wework_admin/frame#index")
+        cookies = self.driver.get_cookies()
+        print(cookies)
+          #通过cookies进行打开操作最后再进行刷新就完成了浏览器复用功能
+    #     cookies =[{'domain': '.qq.com', 'expiry': 1603685896, 'httpOnly': False, 'name': '_gat', 'path': '/', 'secure': False, 'value': '1'}, {'domain': '.work.weixin.qq.com', 'expiry': 1635143170, 'httpOnly': False, 'name': 'Hm_lvt_9364e629af24cb52acc78b43e8c9f77d', 'path': '/', 'secure': False, 'value': '1603334136,1603334310,1603601276,1603607069'}, {'domain': '.qq.com', 'expiry': 1913968973, 'httpOnly': False, 'name': 'pac_uid', 'path': '/', 'secure': False, 'value': '1_734535144'}, {'domain': '.work.weixin.qq.com', 'httpOnly': True, 'name': 'wwrtx.vst', 'path': '/', 'secure': False, 'value': 'q7JrrVXcnstB61Xv7IrzWyXMc0RTD6uEZ3v8Nhdt6JDHyYgYBqQMRK4parP2EgUe9NRymUiI9UXRyrUhot1txbjfKhqyEVPk0avSDUmqQLdp6QPlftWD0uoyeWRIaxq8TF_aamsydt48H7hyZ_EhwRi-5A9xqjxYNGAXRB_KBCzMf5Bxtf_Uyf_V06kaYRU5SThWuQvjmcGcDOb80Ikv6I8aNqaiBcA7cnBWDqkyW7fwJZsNOu_bLBWcHex8DaLW-nBMgMGzI0N6etvmolthEw'}, {'domain': '.work.weixin.qq.com', 'httpOnly': False, 'name': 'wxpay.vid', 'path': '/', 'secure': False, 'value': '1688851195386996'}, {'domain': '.qq.com', 'expiry': 2147385600, 'httpOnly': False, 'name': 'pgv_pvid', 'path': '/', 'secure': False, 'value': '2084264636'}, {'domain': '.qq.com', 'expiry': 2147385600, 'httpOnly': False, 'name': 'pgv_pvi', 'path': '/', 'secure': False, 'value': '2231538688'}, {'domain': '.work.weixin.qq.com', 'httpOnly': False, 'name': 'wxpay.corpid', 'path': '/', 'secure': False, 'value': '1970325096071154'}, {'domain': '.qq.com', 'expiry': 1603772156, 'httpOnly': False, 'name': '_gid', 'path': '/', 'secure': False, 'value': 'GA1.2.57013476.1603601276'}, {'domain': '.work.weixin.qq.com', 'httpOnly': True, 'name': 'wwrtx.sid', 'path': '/', 'secure': False, 'value': 'DJuYd-8Pjbch2vYte0bI9eyMb1pRj-xeo8UhGy2XeslyyHUKqe85pZoVtwmG7k0z'}, {'domain': '.work.weixin.qq.com', 'httpOnly': False, 'name': 'wwrtx.d2st', 'path': '/', 'secure': False, 'value': 'a662695'}, {'domain': '.work.weixin.qq.com', 'httpOnly': True, 'name': 'wwrtx.refid', 'path': '/', 'secure': False, 'value': '2882597490946703'}, {'domain': 'work.weixin.qq.com', 'expiry': 1603709226, 'httpOnly': True, 'name': 'ww_rtkey', 'path': '/', 'secure': False, 'value': '8lp34nn'}, {'domain': '.qq.com', 'expiry': 1604279564, 'httpOnly': False, 'name': 'ptui_loginuin', 'path': '/', 'secure': False, 'value': '734535144'}, {'domain': '.qq.com', 'expiry': 2147385600, 'httpOnly': False, 'name': 'o_cookie', 'path': '/', 'secure': False, 'value': '734535144'}, {'domain': '.qq.com', 'expiry': 2147483647, 'httpOnly': False, 'name': 'ptcz', 'path': '/', 'secure': False, 'value': '55bd3f5e35da707a5fb51a8138fc9c0fdfd8dea31e319faa5b095eb57dd415ac'}, {'domain': '.qq.com', 'expiry': 2147483647, 'httpOnly': False, 'name': 'RK', 'path': '/', 'secure': False, 'value': 'lKTEOfM3af'}, {'domain': '.work.weixin.qq.com', 'expiry': 1606277770, 'httpOnly': False, 'name': 'wwrtx.i18n_lan', 'path': '/', 'secure': False, 'value': 'zh'}, {'domain': '.qq.com', 'expiry': 1666757756, 'httpOnly': False, 'name': '_ga', 'path': '/', 'secure': False, 'value': 'GA1.2.2057702647.1598259988'}, {'domain': '.work.weixin.qq.com', 'expiry': 1629795986, 'httpOnly': False, 'name': 'wwrtx.c_gdpr', 'path': '/', 'secure': False, 'value': '0'}, {'domain': '.qq.com', 'expiry': 1913968973, 'httpOnly': False, 'name': 'iip', 'path': '/', 'secure': False, 'value': '0'}, {'domain': '.work.weixin.qq.com', 'httpOnly': True, 'name': 'wwrtx.ltype', 'path': '/', 'secure': False, 'value': '1'}, {'domain': '.work.weixin.qq.com', 'httpOnly': True, 'name': 'wwrtx.ref', 'path': '/', 'secure': False, 'value': 'direct'}, {'domain': '.work.weixin.qq.com', 'httpOnly': False, 'name': 'wwrtx.vid', 'path': '/', 'secure': False, 'value': '1688851195386996'}]
+    #     self.driver.get("https://work.weixin.qq.com/wework_admin/frame#index")
+    #     for i in cookies:
+    #         self.driver.add_cookie(i)
+    #     self.driver.refresh()
+    #     sleep(3)
+    #@pytest.mark.skip()
+    def test_shelve(self):
+        cookies = [{'domain': '.qq.com', 'expiry': 1603857115, 'httpOnly': False, 'name': '_gat', 'path': '/', 'secure': False, 'value': '1'}, {'domain': '.work.weixin.qq.com', 'httpOnly': True, 'name': 'wwrtx.vst', 'path': '/', 'secure': False, 'value': 'gttLYpGcPd2Dh6P1W5t8XAd1la9_9qSyb55oXtR5Shryrkmlu-EBFQIpHMUIdXBOaSSGVsZikjf_DnTHaAXFNlvITB_sH6-ZinusI58VD2-ATOTxwCD0zLh39pGHg0eYS4ryzstXSbQBzULv9oUObpqJCYMFTtq0YUmbUT-OVhWlfKuX0bGhRwt0rL1IcHX5EfqJInh_S3xvMhpW_53i9BANk67S8CtZRGYnwD1EeQmn6Y8yEAxmoyT0ZSIpPs2b24b43iK4oXoyjpXy8MEItQ'}, {'domain': '.work.weixin.qq.com', 'httpOnly': True, 'name': 'wwrtx.sid', 'path': '/', 'secure': False, 'value': 'DJuYd-8Pjbch2vYte0bI9feYR360lom0llBO5MXy1UBWnnBKTp30jTNwcBntznFX'}, {'domain': '.qq.com', 'expiry': 1603943359, 'httpOnly': False, 'name': '_gid', 'path': '/', 'secure': False, 'value': 'GA1.2.1557126880.1603856949'}, {'domain': 'work.weixin.qq.com', 'expiry': 1603888483, 'httpOnly': True, 'name': 'ww_rtkey', 'path': '/', 'secure': False, 'value': 'eq2eh4'}, {'domain': '.qq.com', 'expiry': 2147385600, 'httpOnly': False, 'name': 'pgv_pvid', 'path': '/', 'secure': True, 'value': '2084264636'}, {'domain': '.work.weixin.qq.com', 'httpOnly': True, 'name': 'wwrtx.ref', 'path': '/', 'secure': True, 'value': 'direct'}, {'domain': '.qq.com', 'httpOnly': False, 'name': 'qqmusic_fromtag', 'path': '/', 'secure': False, 'value': ''}, {'domain': '.qq.com', 'httpOnly': False, 'name': 'qqmusic_uin', 'path': '/', 'secure': False, 'value': ''}, {'domain': '.work.weixin.qq.com', 'httpOnly': False, 'name': 'wwrtx.vid', 'path': '/', 'secure': False, 'value': '1688851195386996'}, {'domain': '.qq.com', 'expiry': 1913968973, 'httpOnly': False, 'name': 'iip', 'path': '/', 'secure': True, 'value': '0'}, {'domain': '.work.weixin.qq.com', 'httpOnly': False, 'name': 'wxpay.vid', 'path': '/', 'secure': False, 'value': '1688851195386996'}, {'domain': '.qq.com', 'httpOnly': False, 'name': 'property20', 'path': '/', 'secure': False, 'value': '83CED0F624ECA6EB833CA32BAE37FA7BEBD52082CE5A44590EF48B1ED0879A16C1E3B317062D8A1D'}, {'domain': '.qq.com', 'expiry': 1913968973, 'httpOnly': False, 'name': 'pac_uid', 'path': '/', 'secure': True, 'value': '1_734535144'}, {'domain': '.work.weixin.qq.com', 'httpOnly': False, 'name': 'wxpay.corpid', 'path': '/', 'secure': False, 'value': '1970325096071154'}, {'domain': '.qq.com', 'expiry': 2147385600, 'httpOnly': False, 'name': 'pgv_pvi', 'path': '/', 'secure': True, 'value': '2231538688'}, {'domain': '.work.weixin.qq.com', 'expiry': 1635143170, 'httpOnly': False, 'name': 'Hm_lvt_9364e629af24cb52acc78b43e8c9f77d', 'path': '/', 'secure': True, 'value': '1603334136,1603334310,1603601276,1603607069'}, {'domain': '.work.weixin.qq.com', 'httpOnly': True, 'name': 'wwrtx.refid', 'path': '/', 'secure': True, 'value': '2882597490946703'}, {'domain': '.qq.com', 'expiry': 1604279564, 'httpOnly': False, 'name': 'ptui_loginuin', 'path': '/', 'secure': True, 'value': '734535144'}, {'domain': '.qq.com', 'httpOnly': False, 'name': 'pgv_info', 'path': '/', 'secure': False, 'value': 'ssid=s3468301958'}, {'domain': '.work.weixin.qq.com', 'expiry': 1629795986, 'httpOnly': False, 'name': 'wwrtx.c_gdpr', 'path': '/', 'secure': True, 'value': '0'}, {'domain': '.qq.com', 'expiry': 2147483647, 'httpOnly': False, 'name': 'ptcz', 'path': '/', 'secure': False, 'value': '55bd3f5e35da707a5fb51a8138fc9c0fdfd8dea31e319faa5b095eb57dd415ac'}, {'domain': '.qq.com', 'httpOnly': False, 'name': 'skey', 'path': '/', 'secure': False, 'value': '@qGbrtAepZ'}, {'domain': '.qq.com', 'httpOnly': False, 'name': 'uin', 'path': '/', 'secure': False, 'value': 'o0734535144'}, {'domain': '.qq.com', 'httpOnly': False, 'name': 'rv2', 'path': '/', 'secure': False, 'value': '80BA40F02AE884212308B91A4A6A925DAD6D49A6F7973722D7'}, {'domain': '.qq.com', 'expiry': 2147483647, 'httpOnly': False, 'name': 'RK', 'path': '/', 'secure': True, 'value': 'lKTEOfM3af'}, {'domain': '.work.weixin.qq.com', 'httpOnly': True, 'name': 'wwrtx.ltype', 'path': '/', 'secure': False, 'value': '1'}, {'domain': '.work.weixin.qq.com', 'httpOnly': False, 'name': 'wwrtx.d2st', 'path': '/', 'secure': False, 'value': 'a786837'}, {'domain': '.qq.com', 'expiry': 2147385600, 'httpOnly': False, 'name': 'o_cookie', 'path': '/', 'secure': True, 'value': '734535144'}, {'domain': '.qq.com', 'expiry': 1666928959, 'httpOnly': False, 'name': '_ga', 'path': '/', 'secure': False, 'value': 'GA1.2.2057702647.1598259988'}, {'domain': '.work.weixin.qq.com', 'expiry': 1606448996, 'httpOnly': False, 'name': 'wwrtx.i18n_lan', 'path': '/', 'secure': False, 'value': 'zh'}, {'domain': '.qq.com', 'httpOnly': False, 'name': 'qqmusic_key', 'path': '/', 'secure': False, 'value': ''}]
+        #把cookie放到pycharm的数据中心的shelve
+        #shelve python 内置模块，专门用来对数据进行持久化存储的库，相当于小型的数据库
+        db = shelve.open("cookies")
+        db["cookies"] =cookies
+        cookies = db['cookies']
+        db.close()
+        self.driver.get("https://work.weixin.qq.com/wework_admin/frame#index")
+        for cookies in cookies:
+            self.driver.add_cookie(cookies)
+        self.driver.refresh()
+        self.driver.find_element_by_css_selector(".index_service_cnt_itemWrap:nth-child(2)").click()
+        # 上传本地文件，上传本地文件写绝对路径使用send_keys
+        self.driver.find_element_by_css_selector(".ww_fileImporter_fileContainer_uploadInputMask").send_keys(
+            "C:/Users/73453/Desktop/11.xlsx")
+        # 断言验证上传文件名是否一致
+        filename = self.driver.find_element_by_css_selector(".ww_fileImporter_fileContainer_fileNames").text
+        assert "11.xlsx" == filename
+        sleep(3)
