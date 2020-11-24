@@ -1,0 +1,4 @@
+go_market:
+  - by: xpath
+    locator: "//*[(@resource-id='com.xueqiu.android:id/title_text')and contains(@text,'市场')]"
+    action: click
